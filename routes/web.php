@@ -11,6 +11,10 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/employees', function() {
+    return view('pages.employees.index');
+})->middleware(['auth', 'verified']);
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
