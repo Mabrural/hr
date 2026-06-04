@@ -5,113 +5,55 @@
             <span class="mdi mdi-menu"></span>
         </button>
         <div class="navbar-brand-wrapper">
-            <a class="navbar-brand brand-logo" href="index.html"><img src="{{ asset('assets/images/logo.svg') }}"
-                    alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="index.html"><img
-                    src="{{ asset('assets/images/logo-mini.svg') }}" alt="logo" /></a>
+            <a class="navbar-brand brand-logo d-flex align-items-center" href="{{ route('dashboard') }}">
+                <i class="mdi mdi-account-group text-white me-2" style="font-size: 32px;"></i>
+                <span class="fw-bold text-white">HR </span>
+            </a>
+
+            <a class="navbar-brand brand-logo-mini" href="{{ route('dashboard') }}">
+                <i class="mdi mdi-account-group text-primary" style="font-size: 28px;"></i>
+            </a>
         </div>
-        <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, Brandon Haynes</h4>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
-                <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
+                <h4 id="current-datetime" class="mb-0 font-weight-bold d-none d-xl-block"></h4>
             </li>
-            <li class="nav-item dropdown me-1">
-                <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
-                    id="messageDropdown" href="#" data-bs-toggle="dropdown">
-                    <i class="mdi mdi-calendar mx-0"></i>
-                    <span class="count bg-info">2</span>
+
+          
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown"
+                    id="profileDropdown">
+
+                    <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="profile" class="rounded-circle"
+                        width="35">
+
+                    <span class="nav-profile-name ms-2">
+                        {{ Auth::user()->name ?? 'User' }}
+                    </span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                    aria-labelledby="messageDropdown">
-                    <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <img src="{{ asset('assets/images/faces/face4.jpg') }}" alt="image" class="profile-pic">
-                        </div>
-                        <div class="preview-item-content flex-grow">
-                            <h6 class="preview-subject ellipsis font-weight-normal">David Grey
-                            </h6>
-                            <p class="font-weight-light small-text text-muted mb-0">
-                                The meeting is cancelled
-                            </p>
-                        </div>
+
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+
+                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                        <i class="mdi mdi-account text-primary"></i>
+                        Profile
                     </a>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <img src="{{ asset('assets/images/faces/face2.jpg') }}" alt="image" class="profile-pic">
-                        </div>
-                        <div class="preview-item-content flex-grow">
-                            <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
-                            </h6>
-                            <p class="font-weight-light small-text text-muted mb-0">
-                                New product launch
-                            </p>
-                        </div>
+                    
+                    <div class="dropdown-divider"></div>
+
+                    <a href="#" class="dropdown-item"
+                        onclick="event.preventDefault(); if(confirm('Are you sure you want to logout?')) document.getElementById('logout-form').submit();">
+
+                        <i class="mdi mdi-logout text-danger"></i>
+                        Logout
                     </a>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <img src="{{ asset('assets/images/faces/face3.jpg') }}" alt="image" class="profile-pic">
-                        </div>
-                        <div class="preview-item-content flex-grow">
-                            <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
-                            </h6>
-                            <p class="font-weight-light small-text text-muted mb-0">
-                                Upcoming board meeting
-                            </p>
-                        </div>
-                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                        @csrf
+                    </form>
                 </div>
             </li>
-            <li class="nav-item dropdown me-2">
-                <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center"
-                    id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-                    <i class="mdi mdi-email-open mx-0"></i>
-                    <span class="count bg-danger">1</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-                    aria-labelledby="notificationDropdown">
-                    <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <div class="preview-icon bg-success">
-                                <i class="mdi mdi-information mx-0"></i>
-                            </div>
-                        </div>
-                        <div class="preview-item-content">
-                            <h6 class="preview-subject font-weight-normal">Application Error</h6>
-                            <p class="font-weight-light small-text mb-0 text-muted">
-                                Just now
-                            </p>
-                        </div>
-                    </a>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <div class="preview-icon bg-warning">
-                                <i class="mdi mdi-settings mx-0"></i>
-                            </div>
-                        </div>
-                        <div class="preview-item-content">
-                            <h6 class="preview-subject font-weight-normal">Settings</h6>
-                            <p class="font-weight-light small-text mb-0 text-muted">
-                                Private message
-                            </p>
-                        </div>
-                    </a>
-                    <a class="dropdown-item preview-item">
-                        <div class="preview-thumbnail">
-                            <div class="preview-icon bg-info">
-                                <i class="mdi mdi-account-box mx-0"></i>
-                            </div>
-                        </div>
-                        <div class="preview-item-content">
-                            <h6 class="preview-subject font-weight-normal">New user registration</h6>
-                            <p class="font-weight-light small-text mb-0 text-muted">
-                                2 days ago
-                            </p>
-                        </div>
-                    </a>
-                </div>
-            </li>
+
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
             data-toggle="offcanvas">
@@ -128,37 +70,7 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                    <img src="{{ asset('assets/images/faces/face5.jpg') }}" alt="profile" />
-                    <span class="nav-profile-name">Eleanor Richardson</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
-                        <i class="mdi mdi-settings text-primary"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item">
-                        <i class="mdi mdi-logout text-primary"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link icon-link">
-                    <i class="mdi mdi-plus-circle-outline"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link icon-link">
-                    <i class="mdi mdi-web"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link icon-link">
-                    <i class="mdi mdi-clock-outline"></i>
-                </a>
-            </li>
+            
         </ul>
     </div>
 </nav>

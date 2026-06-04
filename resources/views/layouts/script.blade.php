@@ -6,7 +6,7 @@
 <script src="{{ asset('assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
 <!-- End plugin js for this page-->
 <!-- inject:js -->
-<script src="{{ asset('js/off-canvas.js') }}"></script>
+<script src="{{ asset('assets/js/off-canvas.js') }}"></script>
 <script src="{{ asset('assets/js/hoverable-collapse.js') }}"></script>
 <script src="{{ asset('assets/js/template.js') }}"></script>
 <!-- endinject -->

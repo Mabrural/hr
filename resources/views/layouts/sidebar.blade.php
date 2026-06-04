@@ -6,10 +6,9 @@
             <span></span>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="{{ route('dashboard') }}">
                 <i class="mdi mdi-view-quilt menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
-                <div class="badge badge-info badge-pill">2</div>
             </a>
         </li>
         <li class="nav-item sidebar-category">
@@ -86,15 +85,16 @@
             <span></span>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="docs/documentation.html">
-                <i class="mdi mdi-file-document-box-outline menu-icon"></i>
-                <span class="menu-title">Documentation</span>
+            <a class="nav-link" href="#"
+                onclick="event.preventDefault(); if(confirm('Are you sure you want to logout?')) document.getElementById('logout-form').submit();">
+                <button type="button" class="btn bg-danger btn-sm menu-title">
+                    <i class="mdi mdi-logout"></i> Logout
+                </button>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="https://www.bootstrapdash.com/product/spica-admin/">
-                <button class="btn bg-danger btn-sm menu-title">Upgrade to pro</button>
-            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+            </form>
         </li>
     </ul>
 </nav>
