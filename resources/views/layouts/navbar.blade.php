@@ -19,7 +19,7 @@
                 <h4 id="current-datetime" class="mb-0 font-weight-bold d-none d-xl-block"></h4>
             </li>
 
-          
+
             <li class="nav-item nav-profile dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown"
                     id="profileDropdown">
@@ -27,9 +27,16 @@
                     <img src="{{ asset('assets/images/faces/face1.jpg') }}" alt="profile" class="rounded-circle"
                         width="35">
 
-                    <span class="nav-profile-name ms-2">
-                        {{ strlen(Auth::user()->name ?? 'User') > 10 ? substr(Auth::user()->name, 0, 10) . '...' : (Auth::user()->name ?? 'User') }}
+                    {{-- Desktop --}}
+                    <span class="nav-profile-name ms-2 d-none d-md-inline">
+                        {{ Auth::user()->name }}
                     </span>
+
+                    {{-- Mobile --}}
+                    <span class="nav-profile-name ms-2 d-inline d-md-none">
+                        {{ \Illuminate\Support\Str::limit(Auth::user()->name, 10, '...') }}
+                    </span>
+
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -38,7 +45,7 @@
                         <i class="mdi mdi-account text-primary"></i>
                         Profile
                     </a>
-                    
+
                     <div class="dropdown-divider"></div>
 
                     <a href="#" class="dropdown-item"
@@ -70,7 +77,7 @@
             </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-            
+
         </ul>
     </div>
 </nav>
