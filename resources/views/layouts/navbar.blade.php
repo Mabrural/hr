@@ -28,7 +28,7 @@
                         width="35">
 
                     <span class="nav-profile-name ms-2">
-                        {{ Auth::user()->name ?? 'User' }}
+                        {{ strlen(Auth::user()->name ?? 'User') > 10 ? substr(Auth::user()->name, 0, 10) . '...' : (Auth::user()->name ?? 'User') }}
                     </span>
                 </a>
 
