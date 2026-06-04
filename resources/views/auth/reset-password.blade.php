@@ -1,39 +1,97 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('layouts.main-guest')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('container')
+<div class="container-scroller d-flex">
+    <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                        <div class="brand-logo text-center">
+                            <h2 class="fw-bold mb-0">HR Management</h2>
+                            <small class="text-muted mt-1">PT Global Petro Pasifik</small>
+                        </div>
+
+                        <h4>Reset Password</h4>
+
+                        <h6 class="font-weight-light mb-4">
+                            Create a new password for your account.
+                        </h6>
+
+                        {{-- Validation Errors --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0 ps-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('password.store') }}">
+                            @csrf
+
+                            {{-- Token --}}
+                            <input
+                                type="hidden"
+                                name="token"
+                                value="{{ $request->route('token') }}">
+
+                            {{-- Email --}}
+                            <div class="form-group">
+                                <input
+                                    type="email"
+                                    name="email"
+                                    class="form-control form-control-lg"
+                                    value="{{ old('email', $request->email) }}"
+                                    placeholder="Email Address"
+                                    required
+                                    readonly>
+                            </div>
+
+                            {{-- New Password --}}
+                            <div class="form-group">
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control form-control-lg"
+                                    placeholder="New Password"
+                                    required>
+                            </div>
+
+                            {{-- Confirm Password --}}
+                            <div class="form-group">
+                                <input
+                                    type="password"
+                                    name="password_confirmation"
+                                    class="form-control form-control-lg"
+                                    placeholder="Confirm New Password"
+                                    required>
+                            </div>
+
+                            <div class="mt-3 d-grid">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary btn-lg font-weight-medium auth-form-btn w-100">
+                                    RESET PASSWORD
+                                </button>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <a href="{{ route('login') }}"
+                                   class="text-primary">
+                                    Back to Login
+                                </a>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+</div>
+@endsection

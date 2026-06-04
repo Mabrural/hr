@@ -1,47 +1,79 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.main-guest')
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+@section('container')
+    <div class="container-scroller d-flex">
+        <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            <div class="brand-logo text-center">
+                                <h2 class="fw-bold mb-0">HR Management</h2>
+                                <small class="text-muted mt-1">PT Global Petro Pasifik</small>
+                            </div>
+
+                            <h6 class="font-weight-light">Sign in to continue.</h6>
+
+                            {{-- Session Status --}}
+                            @if (session('status'))
+                                <div class="alert alert-success mt-3">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+
+                            {{-- Validation Errors --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger mt-3">
+                                    <ul class="mb-0 ps-3">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form class="pt-3" method="POST" action="{{ route('login') }}">
+                                @csrf
+
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-lg" name="email"
+                                        value="{{ old('email') }}" placeholder="Email Address" required autofocus>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" name="password"
+                                        placeholder="Password" required>
+                                </div>
+
+                                <div class="my-2 d-flex justify-content-between align-items-center">
+                                    <div class="form-check">
+                                        <label class="form-check-label text-muted">
+                                            <input type="checkbox" name="remember" class="form-check-input">
+                                            Keep me signed in
+                                        </label>
+                                    </div>
+
+                                    @if (Route::has('password.request'))
+                                        <a href="{{ route('password.request') }}" class="auth-link text-black">
+                                            Forgot password?
+                                        </a>
+                                    @endif
+                                </div>
+
+                                <div class="mt-3 d-grid">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg font-weight-medium auth-form-btn w-100">
+                                        SIGN IN
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+@endsection

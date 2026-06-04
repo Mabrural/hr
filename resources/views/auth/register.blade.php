@@ -1,52 +1,82 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.main-guest')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('container')
+    <div class="container-scroller d-flex">
+        <div class="container-fluid page-body-wrapper full-page-wrapper d-flex">
+            <div class="content-wrapper d-flex align-items-center auth px-0">
+                <div class="row w-100 mx-0">
+                    <div class="col-lg-4 mx-auto">
+                        <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+
+                            <div class="brand-logo text-center">
+                                <h2 class="fw-bold mb-0">HR Management</h2>
+                                <small class="text-muted mt-1">PT Global Petro Pasifik</small>
+                            </div>
+
+                            <h4>Create Account</h4>
+
+                            <h6 class="font-weight-light mb-4">
+                                Create a new account to access the HR Management System.
+                            </h6>
+
+                            {{-- Validation Errors --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0 ps-3">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('register') }}">
+                                @csrf
+
+                                {{-- Full Name --}}
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" name="name"
+                                        value="{{ old('name') }}" placeholder="Full Name" required autofocus>
+                                </div>
+
+                                {{-- Email --}}
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-lg" name="email"
+                                        value="{{ old('email') }}" placeholder="Email Address" required>
+                                </div>
+
+                                {{-- Password --}}
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" name="password"
+                                        placeholder="Password" required>
+                                </div>
+
+                                {{-- Confirm Password --}}
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" name="password_confirmation"
+                                        placeholder="Confirm Password" required>
+                                </div>
+
+                                <div class="mt-3 d-grid">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg font-weight-medium auth-form-btn w-100">
+                                        CREATE ACCOUNT
+                                    </button>
+                                </div>
+
+                                <div class="text-center mt-4">
+                                    Already have an account?
+                                    <a href="{{ route('login') }}" class="text-primary">
+                                        Sign In
+                                    </a>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+@endsection
